@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'custom-font': ['Custom Font', 'Poppins'],
-        'custom-font2': ['Custom Font', 'Kode Mono'],
+        'custom-poppin': ['Custom Font', 'Poppins'],
+        'custom-kode': ['Custom Font', 'Kode Mono'],
+        'custom-robot': ['Custom Font', 'Roboto Mono'],
       },
     },
   },
