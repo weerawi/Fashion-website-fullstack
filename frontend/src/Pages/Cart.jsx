@@ -1,8 +1,11 @@
 import React from 'react'
+import CartItems from '../Components/CartItems'
 
 const Cart = () => {
   return (
-    <div>Cart</div>
+    <div className='mx-auto max-w-[1080px] my-10'>
+      <CartItems/>
+    </div>
   )
 }
 
