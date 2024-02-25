@@ -4,7 +4,7 @@ import Item from './Item'
 
 const RelatedProducts = () => {
   return (
-    <div className='realtedproducts flex flex-col gap-3 items-center mt-10'>
+    <div className='realtedproducts flex flex-col gap-3 items-center my-10'>
         <h1 className='text-3xl font-bold border-b-2 border-b-gray-300 uppercase font-custom-robot'>Related prodcuts</h1>
 
         <div className="realtdproducts-item mt-5 grid grid-cols-1 sm:grid-cols-2   lg:grid-cols-3 gap-8">
