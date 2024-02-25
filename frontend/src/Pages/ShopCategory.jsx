@@ -7,7 +7,7 @@ const ShopCategory = (props) => {
     const all_products = useContext(ShopContext);
 
     return (
-        <div className='my-7 mx-auto w-[82%]'>
+        <div className='my-7 mx-auto w-[82%] max-w-[1280px]'>
             <img className='shopcategory-banner block ' src={props.banner} alt="" />
             <div className="shopcategory-indexSort flex justify-around  items-center mt-5">
                 <p>

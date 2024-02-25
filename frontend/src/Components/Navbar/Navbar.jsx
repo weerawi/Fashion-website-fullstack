@@ -9,7 +9,7 @@ const Navbar = () => {
   const [Menu, setMenu] = useState('Shop');
 
   return (
-    <div className='flex justify-around p-5 bg-gray-200 bottom-3 font-custom-poppin'> 
+    <div className='flex justify-around p-5 bg-gray-200  font-custom-poppin'> 
       <div className="nav-logo flex  gap-2 ">
         <img src={logo} alt='logo' width={50} height={50}/>
         <p className='text-lg flex font-bold items-center  '>SHOPPER</p>
