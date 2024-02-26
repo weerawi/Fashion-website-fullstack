@@ -37,12 +37,97 @@ const upload = multer({storage:storage})
 // creating upload endpoint for images
 
 app.use('/images',express.static('upload/images'))
+
 app.post("/upload", upload.single('product'), (req, res) => {
     res.json({
         success:1,
         image_url:`http://localhost:${port}/images/${req.file.filename}`}
     );
 });
+
+
+
+//Schema for creating products
+
+const Product = mongoose.model("product", {
+    id:{
+        type:Number,
+        required:true
+    },
+    name:{
+        type:String,
+        required:true
+    },
+    image:{
+        type:String,
+        required:true
+    },
+    category:{
+        type:String,
+        required:true
+    },
+    old_price:{
+        type:Number,
+        required:true
+    },
+    new_price:{
+        type:Number,
+        required:true
+    },
+    date:{
+        type:Date,
+        default:Date.now
+    },
+    available:{
+        type:Boolean,
+        default:true
+    }
+    
+})
+
+app.post('/addproduct',async (req,res)=>{
+
+    //id auto generate
+    let products = await Product.find({id:req.body.id});
+    let id;
+    if(products.length>0){
+        let last_product_array = products.slice(-1);
+        let last_product = last_product_array[0];
+        id=last_product.id+1;
+    }else{
+        id =  1;
+    }
+    const product = new Product({
+        id: id , //         req.body.id,
+        name:req.body.name,
+        image:req.body.image,
+        category:req.body.category,
+        old_price:req.body.old_price,
+        new_price:req.body.new_price,
+        available:req.body.available
+    });
+    console.log(product);
+    await product.save();
+    console.log("Saved");
+    res.json({
+        success:1,
+        name:req.body.name
+    });
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
