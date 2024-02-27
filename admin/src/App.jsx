@@ -1,8 +1,15 @@
-import React from 'react'
+import Navbar from "./Components/Navbar"
+import Admin from "./Pages/Admin"
+
 
 const App = () => {
   return (
-    <div>App</div>
+    <div className='font-custom-poppin  overflow-hidden h-screen'> 
+    
+      <Navbar/>
+      <Admin/>
+    
+    </div>
   )
 }
 

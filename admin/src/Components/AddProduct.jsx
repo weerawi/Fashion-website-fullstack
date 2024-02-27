@@ -39,7 +39,7 @@ const AddProduct = () => {
         }).then(res  => res.json()).then((data) => {responseData= data})
 
         //SENDED DATA SAVE IN THE DATABASE
-        
+
         if(responseData.success){
             product.image = responseData.image_url;
             console.log(product);
@@ -59,7 +59,7 @@ const AddProduct = () => {
     }
 
   return (
-    <div className=" flex flex-col gap-7 p-16 bg-gray-200 ml-5 my-5 
+    <div className="h-1/3 flex flex-col gap-7 p-16 bg-gray-200 ml-5 my-5 
     w-auto sm:w-[500px] lg:w-[750px] xl:w-[1280px] font-custom-robot">
         <div className="space-y-2 ">
             <p>Product title</p>
