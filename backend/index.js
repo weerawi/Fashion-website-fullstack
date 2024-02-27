@@ -143,7 +143,67 @@ app.get('/allproducts',async (req,res)=>{
 
 
 
+//schema creating for user model
 
+const Users = mongoose.model("user", {
+    name:{
+        type:String, 
+    },
+    email:{
+        type:String, 
+    },
+    password:{
+        type:String, 
+    },
+    cartData:{
+        type:Object,
+    },
+    date:{
+        type:Date,
+        default:Date.now,
+    }
+})
+
+
+
+//creating API for user registration
+
+app.post("/signup", async (req, res) => { 
+    let check = await Users.findOne({email:req.body.email});
+    if(check){
+        return res.status(400).json({
+            success:false,
+            errors:"Email already exists"
+        }); 
+    } 
+
+    let cart = {};
+    for (let i = 0; i < 300; i++) {
+        cart[i]=0;
+    }    
+    
+    const user = new Users({
+        name:req.body.username,
+        email:req.body.email,
+        password:req.body.password,
+        cartData:cart
+    });
+
+    await user.save();
+
+    const data = {
+        user:{
+            id:user.id
+        } 
+    }
+
+    const token = jwt.sign(data, "secrete_ecom");
+    res.json({
+        success:true,
+        token 
+    });
+
+});
 
 
 
