@@ -1,23 +1,70 @@
 import React from 'react'
+import { useState } from 'react';
 
 const LoginSingUp = () => {
+
+  const [state,setState] = useState('Login')
+  const [formData,setFormData] = useState({
+    username:'',
+    email:'',
+    password:'',
+  })
+
+  const changeHandler = (e) => {
+      setFormData({...formData,[e.target.name]:e.target.value});
+  };
+
+
+  const login = async () => {
+    console.log('Login Function Executed',formData)
+  }
+
+  const singup = async () => {
+    console.log('Singup Function Executed',formData) ;
+    let responseData;
+
+    await fetch('http://localhost:4000/signup',{
+        method:"POST",
+        headers:{
+          Accept:'application/json',
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(formData)
+    }).then(res => res.json()).
+    then((data) => responseData = data)
+
+    if(responseData.success){
+      localStorage.setItem('auth-token',responseData.token);
+      window.location.replace('/');
+    }
+  }
+
+
+
+
   return (
     <div className='loginsignup w-[100%]  bg-red-400 py-20 flex justify-center font-custom-poppin'>
         <div className="loginsignup-container w-[75%] mx-auto max-w-[1080px] bg-white py-10 px-16">
-            <h1 className='text-2xl'>Sign Up</h1>
+            <h1 className='text-2xl font-bold'>{state}</h1>
             <div className="loginsignup-fields flex flex-col mt-7 space-y-4">
-                <input  className='w-[100%] border-2 p-2 rounded-3xl text-gray-600 text-sm' type="text" placeholder= 'Your Name' />
-                <input  className='w-[100%] border-2 p-2 rounded-3xl text-gray-600 text-sm' type="email" placeholder='Email Address' />
-                <input  className='w-[100%] border-2 p-2 rounded-3xl text-gray-600 text-sm' type="password" placeholder='Password' />
+                {state ==="Sign Up"?
+                <input value={formData.name} onChange={changeHandler}  className='w-[100%] border-2 p-2 rounded-3xl text-gray-600 text-sm' type="text" name='username' placeholder= 'Your Name' />
+                :<></>}
+                <input value={formData.email} onChange={changeHandler}  className='w-[100%] border-2 p-2 rounded-3xl text-gray-600 text-sm' type="email" name="email" placeholder='Email Address' />
+                <input value={formData.password} onChange={changeHandler}  className='w-[100%] border-2 p-2 rounded-3xl text-gray-600 text-sm' type="password" name="password" placeholder='Password' />
             </div>
 
-            <button className='w-36 bg-red-400 mt-5 rounded-full p-3 cursor-pointer text-white '>Continue</button>
+            <button onClick={() =>{state==="Login"?login() :singup()} }  className='w-36 bg-red-400 mt-5 rounded-full p-3 cursor-pointer text-white '>Continue</button>
 
-            <p className='loginsignuo-login text-sm mt-4'>Already have an account? <span className='text-red-400 font-medium'>Login Here</span></p>
-
+            {state === "Sign Up" ? 
+            <p className='loginsignuo-login text-sm mt-4'>Already have an account? <span onClick={() => setState("Login")}  className='text-red-400 font-medium cursor-pointer'>Login Here</span></p>
+            : 
+            <p className='loginsignuo-login text-sm mt-4'>Create an account? <span  onClick={() => setState("Sign Up")}  className='text-red-400 font-medium cursor-pointer'>Sign up here</span></p>
+            }
+            
             <div className="loginsignup-agree mt-3 flex items-center gap-4 text-sm text-gray-500 font-medium">
                 <input type="checkbox" name="" id="" />
-                <p>By continueing,I agree to the terms of use & privacy policy</p>
+                <p>By continueing, I agree to the terms of use & privacy policy</p>
             </div>
         </div>
     </div>
