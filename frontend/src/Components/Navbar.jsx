@@ -28,11 +28,22 @@ const Navbar = () => {
           <Link to='/kids'>Kids</Link></li>
       </ul>
 
+
+      {/* ADD and remove the token from local storage when login and logout function working */}
       <div onClick={() => setMenu(' ')} className="nav-login-cart flex  "> 
+      {localStorage.getItem('auth-token')
+      ?
+        <button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}} className='border-gray-500 border-2 rounded-full px-5  text-base 
+        font-semibold'>  
+          <Link to='/login'>Logout</Link>
+        </button>
+      :
         <button  className='border-gray-500 border-2 rounded-full px-5  text-base 
         font-semibold'>  
           <Link to='/login'>Login</Link>
         </button>
+    }
+        
 
         <Link to='/cart'><img className='p-2 cursor-pointer' src={cart_icon} alt='cart'  width={50} height={50}/> </Link>
         <div className="nav-cart-count font-semibold text-base flex mt-[-3px] ml-[-8px] 
