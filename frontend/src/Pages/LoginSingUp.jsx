@@ -17,6 +17,28 @@ const LoginSingUp = () => {
 
   const login = async () => {
     console.log('Login Function Executed',formData)
+    console.log('Singup Function Executed',formData) ;
+    let responseData;
+
+    await fetch('http://localhost:4000/login',{
+        method:"POST",
+        headers:{
+          Accept:'application/json',
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(formData)
+    }).then(res => res.json()).
+    then((data) => responseData = data)
+
+    if(responseData.success){
+
+      // Save the login token in local storage
+      localStorage.setItem('auth-token',responseData.token);
+      window.location.replace('/');
+    }
+    else{
+      alert(responseData.errors)
+    }
   }
 
   const singup = async () => {
@@ -36,6 +58,9 @@ const LoginSingUp = () => {
     if(responseData.success){
       localStorage.setItem('auth-token',responseData.token);
       window.location.replace('/');
+    }
+    else{
+      alert(responseData.errors)
     }
   }
 
