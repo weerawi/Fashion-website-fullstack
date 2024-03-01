@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Item from './Item';
-import new_Collections from './Assets/new_collections';
+// import new_Collections from './Assets/new_collections';
 const NewCollections = () => {
+
+  const [new_Collections,setNew_Collections] = useState([]);
+
+  useEffect(()=>{
+      fetch('http://localhost:4000/newcollections')
+      .then((res)=>res.json())
+      .then((data)=>setNew_Collections(data))
+  },[])
+
   return (
     <div>
         <div className="new-collections flex flex-col gap-3 items-center mt-10">
