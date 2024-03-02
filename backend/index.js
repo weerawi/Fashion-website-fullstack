@@ -257,6 +257,36 @@ app.get('/popularinwoman',async(req,res)=>{
 })
 
 
+//creating middelware to fetch user for cartdata
+const  fetchUser= async (req,res,next)=>{
+    const token = req.header('auth-token');
+    if(!token) {
+        res.status(401).send({errors: "Authentication failed! ,Please authenticate using a valid TOKEN"});
+    }
+    else{
+        try{
+            const data = jwt.verify(token,'secrete_ecom');
+            req.user = data.user;
+            next();
+        }catch(errors){
+            res.status(401).send({errors: "Authentication failed! ,Please authenticate using a valid PROFILE"});
+        }
+    }
+}
+
+//creating endpoint for adding products in cartdata
+app.post('/addtocart',fetchUser,async(req,res)=>{
+
+    // console.log(req.body,req.user);
+
+    //update the  backend after cartitem add
+
+    let userData = await Users.findOne({_id:req.user.id});
+    userData.cartData[req.body.itemId]+=1;
+    await  Users.findOneAndUpdate({_id : req.user.id},{cartData:userData.cartData} );
+    res.send("Added")
+})
+
 app.listen(port, (error) => {
     if(!error){
         console.log(`Server is running at port ${port}`);
