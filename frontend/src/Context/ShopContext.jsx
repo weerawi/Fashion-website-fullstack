@@ -103,7 +103,23 @@ const ShopContextProvider = (props) => {
     }
 
     const deleteFromCart = (itemId) => { 
-        setCartItems((prev)=>({...prev,[itemId]:0}))
+        setCartItems((prev)=>({...prev,[itemId]:0}));
+
+        // making that particular user cart details
+
+        if(localStorage.getItem('auth-token')){
+            fetch('http://localhost:4000/deletefromcart',{
+                method:'POST',
+                headers:{
+                    Accept:'application/form-data',
+                    'auth-token':`${localStorage.getItem('auth-token')}`,
+                    'Content-Type':'application/json',
+                },
+                body:JSON.stringify({'itemId':itemId}) 
+            })
+            .then((res)=>res.json())
+            .then((data)=>console.log(data))
+        }
     }
 
     const contextValue = {all_product,cartItems,addToCart,removeFromCart,getTotalCartAmount,getTotalCartItems,deleteFromCart};
