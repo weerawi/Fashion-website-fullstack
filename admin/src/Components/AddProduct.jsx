@@ -10,6 +10,13 @@ const AddProduct = () => {
         image:'',
         new_price:'',  
         old_price:'',
+        size: {
+            s: 0,
+            m: 0,
+            l: 0,
+            xl: 0,
+            xxl: 0
+        }
     });
 
     const imageHandler = (e) => {
@@ -18,6 +25,16 @@ const AddProduct = () => {
 
     const changeHandler = (e) => {
         setProductDetails({...productDetails,[e.target.name]:e.target.value});
+    }
+
+    const sizeChangeHandler = (size, value) => {
+        setProductDetails({
+            ...productDetails,
+            size: {
+                ...productDetails.size,
+                [size]: value
+            }
+        });
     }
 
     const Add_Product = async () => {
@@ -90,6 +107,36 @@ const AddProduct = () => {
                 <option value="kid">Kid</option> 
             </select>
         </div>
+
+
+        <div className="space-y-2">
+                <p>Product Size</p>
+                <div className="flex gap-x-8">
+                    <div className='flex gap-2'>
+                        <p>Size S</p>
+                        <input className='w-10 ' value={productDetails.size.s} onChange={(e) => sizeChangeHandler('s', e.target.value)} type="number" />
+                    </div>
+                    <div className='flex gap-2'>
+                        <p>Size M</p>
+                        <input className='w-10 ' value={productDetails.size.m} onChange={(e) => sizeChangeHandler('m', e.target.value)} type="number" />
+                    </div>
+                    <div className='flex gap-2'>
+                        <p>Size L</p>
+                        <input className='w-10 ' value={productDetails.size.l} onChange={(e) => sizeChangeHandler('l', e.target.value)} type="number" />
+                    </div>
+                    <div className='flex gap-2'>
+                        <p>Size XL</p>
+                        <input className='w-10 ' value={productDetails.size.xl} onChange={(e) => sizeChangeHandler('xl', e.target.value)} type="number" />
+                    </div>
+                    <div className='flex gap-2'>
+                        <p>Size XXL</p>
+                        <input className='w-10 ' value={productDetails.size.xxl} onChange={(e) => sizeChangeHandler('xxl', e.target.value)} type="number" />
+                    </div>
+                </div>
+            </div>
+
+
+
 
         <div className=' w-[80px] md:w-[150px]  '>
             <label htmlFor="file-input">
