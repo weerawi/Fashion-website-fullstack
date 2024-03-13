@@ -7,10 +7,11 @@ const CartItems = () => {
 
     return (
         <div className="cartitems font-custom-robot">
-            <div className="cartitems-format-main grid grid-cols-8 font-semibold   ">
+            <div className="cartitems-format-main grid grid-cols-9 font-semibold   ">
                 <p className='flex justify-center'>Products</p>
                 <p className='col-start-2 col-span-3 flex justify-center '>Title</p>
                 <p className='flex justify-center' >Price</p>
+                <p className='flex justify-center' >Size</p>
                 <p className='flex justify-center '>Quantity</p>
                 <p className='flex justify-center '>Total</p>
                 <p className='flex justify-center'>Delete</p>
@@ -19,10 +20,19 @@ const CartItems = () => {
             {all_product.map((e) => {
                 if (cartItems[e.id] > 0) {
                     return  <div className="cartitems-format items-center border-b-2
-                    border-gray-400 py-2 grid grid-cols-8 ">
+                    border-gray-400 py-2 grid grid-cols-9 ">
                                 <img src={e.image} width={80} height={80} alt="" className="cartitems-product-icon mx-auto" />
                                 <p className='flex justify-center col-start-2 col-span-3 '>{e.name}</p>
                                 <p className='flex justify-center '>${e.new_price}</p>
+                                <p className='flex justify-center'>
+                                    {Object.entries(e.size).map(([size, quantity]) => {
+                                        if (quantity > 0) {
+                                            return <span key={size}>{size}: {quantity} </span>;
+                                        }
+                                        return null; // Return null for sizes with quantity <= 0
+                                    })}
+                                </p>
+
                                 <p className='flex items-center mx-auto '>
                                     <button onClick={()=>{removeFromCart(e.id)}} className="cartitems-quantity bg-gray-300 mx-1 p-1 ">-</button>
                                     {cartItems[e.id]}
