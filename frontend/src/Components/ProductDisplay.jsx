@@ -6,6 +6,12 @@ import { ShopContext } from '../Context/ShopContext';
 const ProductDisplay = (props) => {
     const {product } = props;
     const {addToCart} = useContext(ShopContext);
+
+    const highlightSize = (sizeQuantity) => {
+        return sizeQuantity > 0 ? 'bg-gray-300 hover:bg-gray-400 hover:text-gray-100' : ' text-strike';
+    };
+
+
   return (
     <div className='productdisplay flex lg:flex-row flex-col my-0    justify-center sm:gap-10 '>
 
@@ -16,6 +22,9 @@ const ProductDisplay = (props) => {
                 <img height={100} width={80} src={product.image} alt="" />
                 <img height={100} width={80} src={product.image} alt="" />
             </div>
+
+            
+
             <div className='productdisplay-img  h-auto max-h-[500px]  '>
                 <img className='productdispplay-main-img'  src={product.image} alt="" />
             </div>
@@ -33,6 +42,8 @@ const ProductDisplay = (props) => {
             </div>
 
 
+
+
             <div className="productdisplay-right-prices flex gap-10 p-4">
                 <div className="productdisplay-right-price-old line-through text-lg font-medium text-gray-500"> ${product.old_price}  </div>
                 <div className="productdisplay-right-price-new text-xl font-semibold"> ${product.new_price}  </div>
@@ -47,12 +58,21 @@ const ProductDisplay = (props) => {
             
             <div className="productdisplay-right-size ">
                 <h1 className='text-lg font-medium text-gray-500 py-2 capitalize'>select size</h1>
-                <div className="productdisplay-right-size flex cursor-pointer gap-5  font-semibold">
-                    <div className='hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4'>S</div>
+                <div className="productdisplay-right-size flex cursor-pointer gap-5 font-semibold">
+
+                
+                                    
+                    {/* <div className={`  hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4`}>S</div>
                     <div className='hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4'>M</div>
                     <div className='hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4'>L</div>
                     <div className='hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4'>XL</div>
-                    <div className='hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4'>XXL</div>
+                    <div className='hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4'>XXL</div> */}
+
+                    {Object.entries(product.size).map(([size, quantity]) => (
+                        <div key={size} className={`hover:text-gray-500 transition-colors duration-100 border-2 bg-gray-100 p-4 ${highlightSize(quantity)}`}>
+                            {size}
+                        </div>
+                    ))}
                 </div>
             </div>
 
